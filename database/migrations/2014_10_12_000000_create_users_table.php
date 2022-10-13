@@ -15,11 +15,23 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('socialite_id')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable(); 
+            // the password field with socialite needs a default value 
+            // or be nullable
             $table->rememberToken();
+
+            // oauth 2.0
+            $table->string('token')->nullable();
+            $table->string('refresh_token')->nullable();
+            $table->string('expires_in')->nullable();
+
+            // oauth 1.0
+            $table->string('token_secret')->nullable();
+
             $table->timestamps();
         });
     }
